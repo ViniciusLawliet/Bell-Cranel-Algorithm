@@ -1,6 +1,8 @@
 # Bell-Cranel-Algorithm
 The Bell Cranel Algorithm is a Python tool designed for generating and visualizing multilayer graphs. It offers customizable parameters for nodes, edges, and interlayer connections, facilitating the modeling and visualization of intricate systems such as dungeons, mazes, and networks.
 
+![Multi-Level Mapping Problem](img\map.png)
+
 ## Introduction
 
 Multilayer graphs, also referred to as multidimensional graphs, are a type of graph representation where nodes and edges exist across multiple layers or dimensions. This approach enables the modeling of interconnected systems with intricate relationships that extend beyond a single layer.
