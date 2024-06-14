@@ -5,63 +5,58 @@ import random
 
 # Graph parameters
 num_layers = 5
-min_nodes_per_layer = 4
-max_nodes_per_layer = 10
-min_edges_per_layer = 5
-max_edges_per_layer = 14
-interlayer_edges = 3
+nodes_per_layer = [4, 6]  # [min, max]
+edges_per_layer = [8, 15]  # [min, max]
+interlayer_edges = [2, 4]  # [min, max]
 animation_speed = 100  # Milliseconds per frame
 allow_disconnected_nodes = False
 
-def generate_layer_graph(min_nodes, max_nodes, min_edges, max_edges, allow_disconnected_nodes):
+def generate_layer_graph(nodes_per_layer, edges_per_layer, allow_disconnected_nodes):
     """
     Generate a single layer graph with given parameters.
     
     Parameters:
-    min_nodes (int): Minimum number of nodes in the layer.
-    max_nodes (int): Maximum number of nodes in the layer.
-    min_edges (int): Minimum number of edges in the layer.
-    max_edges (int): Maximum number of edges in the layer.
+    nodes_per_layer (list): [min, max] number of nodes in the layer.
+    edges_per_layer (list): [min, max] number of edges in the layer.
     allow_disconnected_nodes (bool): Whether to allow disconnected nodes.
     
     Returns:
     G (networkx.Graph): Generated graph for the layer.
     """
     while True:
-        num_nodes = random.randint(min_nodes, max_nodes)
-        num_edges = random.randint(min_edges, max_edges)
+        num_nodes = random.randint(nodes_per_layer[0], nodes_per_layer[1])
+        num_edges = random.randint(edges_per_layer[0], edges_per_layer[1])
         G = nx.gnm_random_graph(num_nodes, num_edges)
         if allow_disconnected_nodes or all([degree > 0 for _, degree in G.degree()]):
             return G
 
-def connect_layers(G, nodes_G1, nodes_G2, num_edges, edge_list):
+def connect_layers(G, nodes_G1, nodes_G2, interlayer_edges, edge_list):
     """
-    Connect nodes between two layers with given number of edges.
+    Connect nodes between two layers with a random number of edges within given range.
     
     Parameters:
     G (networkx.Graph): The main graph.
     nodes_G1 (list): List of nodes in the first layer.
     nodes_G2 (list): List of nodes in the second layer.
-    num_edges (int): Number of edges to connect between layers.
+    interlayer_edges (list): [min, max] number of edges to connect between layers.
     edge_list (list): List to store edges.
     """
+    num_edges = random.randint(interlayer_edges[0], interlayer_edges[1])
     for _ in range(num_edges):
         u = random.choice(nodes_G1)
         v = random.choice(nodes_G2)
         G.add_edge(u, v)
         edge_list.append((u, v))
 
-def generate_multilayer_graph(num_layers, min_nodes, max_nodes, min_edges, max_edges, interlayer_edges, allow_disconnected_nodes):
+def generate_multilayer_graph(num_layers, nodes_per_layer, edges_per_layer, interlayer_edges, allow_disconnected_nodes):
     """
     Generate a multilayer graph with given parameters.
     
     Parameters:
     num_layers (int): Number of layers.
-    min_nodes (int): Minimum number of nodes per layer.
-    max_nodes (int): Maximum number of nodes per layer.
-    min_edges (int): Minimum number of edges per layer.
-    max_edges (int): Maximum number of edges per layer.
-    interlayer_edges (int): Number of edges connecting nodes between layers.
+    nodes_per_layer (list): [min, max] number of nodes per layer.
+    edges_per_layer (list): [min, max] number of edges per layer.
+    interlayer_edges (list): [min, max] number of edges connecting nodes between layers.
     allow_disconnected_nodes (bool): Whether to allow disconnected nodes.
     
     Returns:
@@ -76,7 +71,7 @@ def generate_multilayer_graph(num_layers, min_nodes, max_nodes, min_edges, max_e
     all_edges = []
 
     for _ in range(num_layers):
-        layer_graph = generate_layer_graph(min_nodes, max_nodes, min_edges, max_edges, allow_disconnected_nodes)
+        layer_graph = generate_layer_graph(nodes_per_layer, edges_per_layer, allow_disconnected_nodes)
         layers.append(layer_graph)
 
     G = nx.Graph()
@@ -102,7 +97,7 @@ def generate_multilayer_graph(num_layers, min_nodes, max_nodes, min_edges, max_e
 
 # Generate multilayer graph
 G, pos, all_edges = generate_multilayer_graph(
-    num_layers, min_nodes_per_layer, max_nodes_per_layer, min_edges_per_layer, max_edges_per_layer, interlayer_edges, allow_disconnected_nodes
+    num_layers, nodes_per_layer, edges_per_layer, interlayer_edges, allow_disconnected_nodes
 )
 
 # Extract node coordinates

@@ -12,7 +12,7 @@ The Bell Cranel Algorithm utilizes multilayer graphs to generate and map complex
 ## Key Features
 
 - **Multilayer Graph Generation**: The algorithm generates multilayer graphs representing complex structures with interconnected components.
-- **Customizable Parameters**: Users can specify parameters such as the number of layers, minimum and maximum nodes per layer, minimum and maximum edges per layer, and interlayer connections.
+- **Customizable Parameters**: Users can specify parameters such as the number of layers, nodes per layer, edges per layer, and interlayer connections.
 - **Inspired by DanMachi**: Inspired by the mapping problem featured in the anime "Is It Wrong to Try to Pick Up Girls in a Dungeon?" (DanMachi), the algorithm aims to address similar mapping challenges encountered in complex environments. [DanMachi Dungeon](https://danmachi.fandom.com/wiki/Dungeon).
 - **Mapping Complex Structures**: Ideal for mapping complex systems such as dungeons, mazes, networks, and other intricate structures.
 - **Visualization**: Utilizes Plotly library to visualize generated multilayer graphs in a three-dimensional (3D) projection, providing an intuitive representation of the structure.
@@ -22,11 +22,9 @@ The Bell Cranel Algorithm utilizes multilayer graphs to generate and map complex
 ### Parameters
 
 - **num_layers**: Number of layers in the graph.
-- **min_nodes_per_layer**: Minimum number of nodes per layer.
-- **max_nodes_per_layer**: Maximum number of nodes per layer.
-- **min_edges_per_layer**: Minimum number of edges per layer.
-- **max_edges_per_layer**: Maximum number of edges per layer.
-- **interlayer_edges**: Number of edges connecting nodes between layers.
+- **nodes_per_layer**: Interval specifying the number of nodes per layer, e.g., `[min, max]`.
+- **edges_per_layer**: Interval specifying the number of edges per layer, e.g., `[min, max]`.
+- **interlayer_edges**: Interval specifying the number of edges connecting nodes between layers, e.g., `[min, max]`.
 - **animation_speed**: Speed of the animation in milliseconds per frame.
 - **allow_disconnected_nodes**: Whether to allow nodes without any edges.
 
